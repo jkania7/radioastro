@@ -1,0 +1,11 @@
+import urllib2 #import pacakages we might need
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+
+r = urllib2.urlopen('http://astro.phys.wvu.edu/hii/continuum.dat')#gets the data
+cont = np.genfromtxt(r,delimiter=' ')
+print cont
+def guassian(x, a, b, c):
+    return a*np.exp(-1.0*(x-b)**2/(2.0*c**2))
+#popt,pcov = curve_fit(guassian, 
