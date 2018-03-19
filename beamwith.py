@@ -17,7 +17,7 @@ plt.xlabel(r"RA [Degree]")
 plt.show()"""#first look at data, uncomment to see
 
 def guassian(x, a, b, c):#defines the guassian function
-    return a*np.exp(-1.0*(x-b)**2/(2.0*c**2))
+    return a*np.exp(-1.0*(x-b)**2.0/(2.0*c**2.0))
 popt,pcov = curve_fit(guassian, cont[:,0], cont[:,1],p0=[1.1,283,0.01])#fits the guassian,p0 is inital guess for variables
 perr = np.sqrt(np.diag(pcov))#finds the errors on the fit parms
 print("a={0}+/-{1}, b={2}+/-{3}, c={4}+/-{5}".format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2]))
@@ -30,6 +30,6 @@ ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.3f}\pm{1:.3f}$\n$b={2:.5f
 plt.title(r"Fitting Telescope Beamwidth with a Guassian, $g(x) = a\exp\Big[{-\frac{(x-b)^2}{2c^2}}\Big]$")
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"RA [Degree]")
-plt.legend()
+plt.legend(loc='best')
 plt.savefig('Continuum.pdf', bbox_inches='tight')#saves the output pdf
 plt.show() #shows plot

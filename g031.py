@@ -12,12 +12,12 @@ g031 = np.genfromtxt(r,delimiter=' ')#parses the data
 print('shape(g031)={0}'.format(g031.shape))
 g031 = g031[0:4096-550,:]#cut off bad parts of passband, found via trial and error
 print('shape(g031\')={0}'.format(g031.shape))#makes sure that the cut array is the correct size
-
+"""
 plt.plot(g031[:,0], g031[:,1],label="Antenna Temperature")
 plt.title(r"Determining Telescope Beamwidth")
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"Frequency [Hz]")
-plt.show()
+plt.show()"""
 #first look at data, uncomment to see
 
 def guassian(x, a, b, c, p, s, m):#defines the guassian function
@@ -44,12 +44,12 @@ xdata = np.linspace(min(g031[:,0]), max(g031[:,0]),1000)#use the best fit number
 ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
-ax1.scatter(g031[:,0]/1000.0, g031[:,1],marker="s",color='r',label='Observed')
-ax1.plot(xdata/1000.0,ydata,label="Best Fit Guassian\n $a={0:.4f}\pm{1:.4f}$\n$b={2:.6f}\pm{3:.6f}$\n$c={4:.3f}\pm{5:.3f}$\n$m={6:.5f}\pm{7:.5f}$".\
-             format(popt[0],perr[0],popt[1]/1000.0,perr[1]/1000.0,popt[2],perr[2],popt[3],perr[3]))
+ax1.scatter(g031[:,0], g031[:,1],marker="s",color='r',label='Observed')
+ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.2e}\pm{1:.1e}$\n$b={2:.3f}\pm{3:.3f}$\n$c={4:.3f}\pm{5:.3f}$\n$p={6:.2e}\pm{7:.1e}$\n$s={8:.4f}\pm{9:.4f}$\n$m={10:d}\pm{11:2d}$".\
+             format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2],popt[3],perr[3],popt[4],perr[4],int(round(popt[5],-2)),int(perr[5])))
 plt.title(r"Fitting Spectral Line with  Guassian, $g(x) = a\exp\Big[{-\frac{(x-b)^2}{2c^2}}\Big]+px^2+sx+m$")
 plt.ylabel(r"Antenna Temperature [K]")
-plt.xlabel(r"Frequency [MHz]")
-plt.legend()
+plt.xlabel(r"Frequency [Hz]")
+plt.legend(loc='best')
 plt.savefig('G031.pdf', bbox_inches='tight')#saves the output pdf
 plt.show() #shows plot
