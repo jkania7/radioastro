@@ -1,3 +1,4 @@
+"""Created by jwk 19 March 2018"""
 import urllib2 #import pacakages we might need
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,14 +16,13 @@ plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"RA [Degree]")
 plt.show()"""#first look at data, uncomment to see
 
-def guassian(x, a, b, c):
+def guassian(x, a, b, c):#defines the guassian function
     return a*np.exp(-1.0*(x-b)**2/(2.0*c**2))
-popt,pcov = curve_fit(guassian, cont[:,0], cont[:,1],p0=[1.1,283,0.01])
-perr = np.sqrt(np.diag(pcov))
+popt,pcov = curve_fit(guassian, cont[:,0], cont[:,1],p0=[1.1,283,0.01])#fits the guassian,p0 is inital guess for variables
+perr = np.sqrt(np.diag(pcov))#finds the errors on the fit parms
 print("a={0}+/-{1}, b={2}+/-{3}, c={4}+/-{5}".format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2]))
 xdata = np.linspace(min(cont[:,0]), max(cont[:,0]),1000)#use the best fit numbers to plot 
 ydata = guassian(xdata,*popt)
-#p0 is inital guess for variables
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
 ax1.scatter(cont[:,0], cont[:,1],marker="s",color='r',label='Observed')
@@ -31,5 +31,5 @@ plt.title(r"Fitting Telescope Beamwidth with a Guassian, $g(x) = a\exp\Big[{-\fr
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"RA [Degree]")
 plt.legend()
-plt.savefig('Continuum.pdf', bbox_inches='tight')
-plt.show() 
+plt.savefig('Continuum.pdf', bbox_inches='tight')#saves the output pdf
+plt.show() #shows plot
