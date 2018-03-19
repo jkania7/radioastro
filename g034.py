@@ -10,25 +10,27 @@ rc('text', usetex=True)
 r = urllib2.urlopen('http://astro.phys.wvu.edu/hii/G034.133.dat')#gets the data
 g034 = np.genfromtxt(r,delimiter=' ')#parses the data
 print('shape(g034)={0}'.format(g034.shape))
-g034 = g034[2300:3300,:]
+g034 = g034[0+100:4096-120,:] #cut off passband rolloff, found by trial end error
 print('shape(g034\')={0}'.format(g034.shape))
 """
 plt.plot(g034[:,0], g034[:,1],label="Antenna Temperature")
 plt.title(r"Determining Telescope Beamwidth")
 plt.ylabel(r"Antenna Temperature [K]")
-plt.xlabel(r"RA [Degree]")
+plt.xlabel(r"Frequency [Hz]")
 plt.show()"""
 #first look at data, uncomment to see
 
 def guassian(x, a, b, c, m):#defines the guassian function
-    return a*np.exp(-1.0*(x-b)**2/(2.0*c**2)) + m
-a0 = max(g034[:,1]) #Guess for A
-b0 = g034[np.argmax(g034[:,1]),0]
-m0 = np.mean(g034[:,1])
-print('a0={0}'.format(a0))
+    return a*np.exp(-1.0*(x-b)**2.0/(2.0*c**2.0)) + m
+a0 = max(g034[:,1]) #Guess for 
+b0 = g034[np.argmax(g034[:,1]),0]#guess b by looking location of a
+c0 = 0.01 #from visual inspection
+m0 = np.mean(g034[:,1])#guess for the offset
+print('a0={0}'.format(a0))#print out to check os 
 print('b0={0}'.format(b0))
+print('c0={0}'.format(c0))
 print('m0={0}'.format(m0))
-popt,pcov = curve_fit(guassian, g034[:,0], g034[:,1],p0=[a0,b0,0.01,m0])#fits the guassian,p0 is inital guess for variables
+popt,pcov = curve_fit(guassian, g034[:,0], g034[:,1],p0=[a0,b0,c0,m0])#fits the guassian,p0 is inital guess for variables
 perr = np.sqrt(np.diag(pcov))#finds the errors on the fit parms
 print("a={0}+/-{1}, b={2}+/-{3}, c={4}+/-{5}, m={6}+/-{7}".\
           format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2],popt[3],perr[3]))
