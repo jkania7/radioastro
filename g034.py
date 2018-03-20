@@ -39,7 +39,7 @@ ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
 ax1.scatter(g034[:,0], g034[:,1],marker="s",color='r',label='Observed',s=1)
-ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.4f}\pm{1:.4f}$\n$b={2:.3f}\pm{3:.3f}$\n$c={4:.3f}\pm{5:.3f}$\n$m={6:.5f}\pm{7:.5f}$".\
+ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.4f}\pm{1:.4f}K$\n$b={2:.3f}\pm{3:.3f}Hz$\n$c={4:.3f}\pm{5:.3f}Hz$\n$m={6:.5f}\pm{7:.5f}K$".\
              format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2],popt[3],perr[3]))
 plt.title(r"Fitting Spectral Line with  Guassian, $g(x) = a\exp\Big[{-\frac{(x-b)^2}{2c^2}}\Big]+m$")
 plt.ylabel(r"Antenna Temperature [K]")
