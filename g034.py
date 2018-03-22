@@ -32,16 +32,16 @@ print('c0={0}'.format(c0))
 print('m0={0}'.format(m0))
 popt,pcov = curve_fit(guassian, g034[:,0], g034[:,1],p0=[a0,b0,c0,m0])#fits the guassian,p0 is inital guess for variables
 perr = np.sqrt(np.diag(pcov))#finds the errors on the fit parms
-print("a={0}+/-{1}, b={2}+/-{3}, c={4}+/-{5}, m={6}+/-{7}".\
+print("a={0}+/-{1}, x0={2}+/-{3}, sigma={4}+/-{5}, b={6}+/-{7}".\
           format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2],popt[3],perr[3]))
 xdata = np.linspace(min(g034[:,0]), max(g034[:,0]),1000)#use the best fit numbers to plot 
 ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
 ax1.scatter(g034[:,0], g034[:,1],marker="s",color='r',label='Observed',s=1)
-ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.4f}\pm{1:.4f}K$\n$b={2:.3f}\pm{3:.3f}Hz$\n$c={4:.3f}\pm{5:.3f}Hz$\n$m={6:.5f}\pm{7:.5f}K$".\
+ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.4f}\pm{1:.4f}K$\n$x_0={2:.3f}\pm{3:.3f}Hz$\n$\sigma={4:.3f}\pm{5:.3f}Hz$\n$b={6:.5f}\pm{7:.5f}K$".\
              format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2],popt[3],perr[3]))
-plt.title(r"Fitting Spectral Line with  Guassian, $g(x) = a\exp\Big[{-\frac{(x-b)^2}{2c^2}}\Big]+m$")
+plt.title(r"Fitting Spectral Line with  Guassian, $g(x) = a\exp\Big[{-\frac{(x-x_0)^2}{2\sigma^2}}\Big]+b$")
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"Frequency [Hz]")
 plt.legend(loc='best')

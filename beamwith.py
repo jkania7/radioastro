@@ -20,15 +20,15 @@ def guassian(x, a, b, c):#defines the guassian function
     return a*np.exp(-1.0*(x-b)**2.0/(2.0*c**2.0))
 popt,pcov = curve_fit(guassian, cont[:,0], cont[:,1],p0=[1.1,283,0.01])#fits the guassian,p0 is inital guess for variables
 perr = np.sqrt(np.diag(pcov))#finds the errors on the fit parms
-print("a={0}+/-{1}, b={2}+/-{3}, c={4}+/-{5}".format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2]))
+print("a={0}+/-{1}, x0={2}+/-{3}, sigma={4}+/-{5}".format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2]))
 xdata = np.linspace(min(cont[:,0]), max(cont[:,0]),1000)#use the best fit numbers to plot 
 ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
 ax1.scatter(cont[:,0], cont[:,1],marker="s",color='r',label='Observed', s=2)
-ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.3f}\pm{1:.3f} K$\n$b={2:.5f}\pm{3:.5f}^\circ$\n$c={4:.5f}\pm{5:.5f}^\circ$".\
+ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.3f}\pm{1:.3f} K$\n$x_0={2:.5f}\pm{3:.5f}^\circ$\n$\sigma={4:.5f}\pm{5:.5f}^\circ$".\
              format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2]))
-plt.title(r"Fitting Telescope Beamwidth with a Guassian, $g(x) = a\exp\Big[{-\frac{(x-b)^2}{2c^2}}\Big]$")
+plt.title(r"Fitting Telescope Beamwidth with a Guassian, $g(x) = a\exp\Big[{-\frac{(x-x_0)^2}{2\sigma^2}}\Big]$")
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"RA [Degree]")
 plt.legend(loc='best')
