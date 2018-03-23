@@ -54,7 +54,7 @@ ax1 = fig1.add_subplot(111)
 ax1.scatter(g031[:,0], g031[:,1],marker="s",color='r',label='Observed',s=1)
 ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0}$ K\n$\\nu_0={1}$ GHz\n$\sigma={2}$ GHz\n$p={3}$ K/GHz$^2$\n$m={4}$ K/GHz\n$b={5}$ K".\
              format(sci_not(popt[0],perr[0]),sci_not(popt[1],perr[1]),sci_not(popt[2],perr[2]),sci_not(popt[3],perr[3]),sci_not(popt[4],perr[4]),sci_not(int(popt[5]),int(perr[5]))))
-plt.title(r"Fitting Spectral Line with  Guassian, $g(\nu) = a\exp\Big[{-\frac{(\nu-\nu_0)^2}{2\sigma^2}}\Big]+p\nu^2+m\nu+b$")
+plt.title(r"G031.727+0.698 Spectral Line with  Guassian, $g(\nu) = a\exp\Big[{-\frac{(\nu-\nu_0)^2}{2\sigma^2}}\Big]+p\nu^2+m\nu+b$")
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"$\nu$ [GHz]")
 plt.legend(loc='lower right')
