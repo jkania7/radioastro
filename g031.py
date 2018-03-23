@@ -61,3 +61,5 @@ plt.legend(loc='lower right')
 plt.autoscale(enable=True, axis='x', tight=True)
 plt.savefig('G031.pdf', bbox_inches='tight')#saves the output pdf
 plt.show() #shows plot
+print("max antenna temp={0}".format(guassian(popt[1],popt[0], popt[1],popt[2],popt[3],popt[4],popt[5])))
+print("error antenna temp={0}".format(guassian(popt[1],popt[0], popt[1],popt[2],popt[3],popt[4],popt[5])- guassian(popt[1],popt[0]+perr[0], popt[1]+perr[1],popt[2]+perr[2],popt[3]+perr[3],popt[4]+perr[4],popt[5]+perr[5])))
