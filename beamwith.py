@@ -33,7 +33,7 @@ xdata = np.linspace(min(cont[:,0]), max(cont[:,0]),1000)#use the best fit number
 ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
-ax1.scatter(cont[:,0], cont[:,1],marker="s",color='r',label='Observed', s=2)
+ax1.scatter(cont[:,0], cont[:,1],marker="s",color='r',label='Observed', s=4)
 ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0}$ K\n$x_0={1}$ $^\circ$\n$\sigma={2}$ $^\circ$".\
              format(sci_not(popt[0],perr[0]),sci_not(popt[1],perr[1]),sci_not(popt[2],perr[2])))
 plt.title(r"Fitting Telescope Beamwidth with a Guassian, $g(x) = a\exp\Big[{-\frac{(x-x_0)^2}{2\sigma^2}}\Big]$")
