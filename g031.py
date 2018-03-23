@@ -6,7 +6,7 @@ from scipy.optimize import curve_fit
 from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Computer Modern Roman','Helvetica']})#makes the plots have pretty fonts
 rc('text', usetex=True)
-plt.rcParams.update({'font.size':11})
+plt.rcParams.update({'font.size':10})
 def sci_not(v,err,rnd=2):#addapted from https://stackoverflow.com/questions/17088510/is-there-a-python-module-that-convert-a-value-and-an-error-to-a-scientific-notat
     power =  - int(('%E' % v)[-3:])
     rnd = - power - int(('%E' % float("{0:.2g}".format(err)))[-3:])
@@ -18,9 +18,7 @@ g031 = np.genfromtxt(r,delimiter=' ')#parses the data
 print('shape(g031)={0}'.format(g031.shape))
 g031 = g031[0:4096-550,:]#cut off bad parts of passband, found via trial and error
 print('shape(g031\')={0}'.format(g031.shape))#makes sure that the cut array is the correct size
-#g031=g031.astype(np.float32)
-#print(g031.dtype)
-g031[:,0] *= 10.0**(-3.0)
+g031[:,0] *= 10.0**(-3.0)#Converts from MHz to GHz
 """
 plt.plot(g031[:,0], g031[:,1],label="Antenna Temperature")
 plt.title(r"Determining Telescope Beamwidth")
@@ -54,7 +52,7 @@ ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
 ax1.scatter(g031[:,0], g031[:,1],marker="s",color='r',label='Observed',s=1)
-ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0}K$\n$\\nu_0={1} Hz$\n$\sigma={2}Hz$\n$p={3}K/Hz^2$\n$m={4}K/Hz$\n$b={5}K$".\
+ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0}$ K\n$\\nu_0={1}$ GHz\n$\sigma={2}$ GHz\n$p={3}$ K/GHz$^2$\n$m={4}$ K/GHz\n$b={5}$ K".\
              format(sci_not(popt[0],perr[0]),sci_not(popt[1],perr[1]),sci_not(popt[2],perr[2]),sci_not(popt[3],perr[3]),sci_not(popt[4],perr[4]),sci_not(int(popt[5]),int(perr[5]))))
 plt.title(r"Fitting Spectral Line with  Guassian, $g(\nu) = a\exp\Big[{-\frac{(\nu-\nu_0)^2}{2\sigma^2}}\Big]+p\nu^2+m\nu+b$")
 plt.ylabel(r"Antenna Temperature [K]")
