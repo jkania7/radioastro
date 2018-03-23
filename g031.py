@@ -6,11 +6,11 @@ from scipy.optimize import curve_fit
 from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Computer Modern Roman','Helvetica']})#makes the plots have pretty fonts
 rc('text', usetex=True)
-plt.rcParams.update({'font.size':10})
+plt.rcParams.update({'font.size':11})
 def sci_not(v,err,rnd=2):#addapted from https://stackoverflow.com/questions/17088510/is-there-a-python-module-that-convert-a-value-and-an-error-to-a-scientific-notat
     power =  - int(('%E' % v)[-3:])
     rnd = - power - int(('%E' % float("{0:.2g}".format(err)))[-3:])
-    return r"({0} \pm {1})E({2})".format(
+    return r"({0} \pm {1})e{2}".format(
             round(v*10**power,rnd+1),round(err*10**power,rnd+1),-power)
 
 r = urllib2.urlopen('http://astro.phys.wvu.edu/hii/G031.727.dat')#gets the data

@@ -6,6 +6,14 @@ from scipy.optimize import curve_fit
 from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Computer Modern Roman','Helvetica']})#makes the plots have pretty fonts
 rc('text', usetex=True)
+plt.rcParams.update({'font.size':10})
+
+def sci_not(v,err,rnd=2):#addapted from https://stackoverflow.com/questions/17088510/is-there-a-python-module-that-convert-a-value-and-an-error-to-a-scientific-notat
+    power =  - int(('%E' % v)[-3:])
+    rnd = - power - int(('%E' % float("{0:.2g}".format(err)))[-3:])
+    return r"({0} \pm {1})e{2}".format(
+            round(v*10**power,rnd+1),round(err*10**power,rnd+1),-power)
+
 
 r = urllib2.urlopen('http://astro.phys.wvu.edu/hii/continuum.dat')#gets the data
 cont = np.genfromtxt(r,delimiter=' ')#parses the data
@@ -26,11 +34,12 @@ ydata = guassian(xdata,*popt)
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
 ax1.scatter(cont[:,0], cont[:,1],marker="s",color='r',label='Observed', s=2)
-ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0:.3f}\pm{1:.3f} K$\n$x_0={2:.5f}\pm{3:.5f}^\circ$\n$\sigma={4:.5f}\pm{5:.5f}^\circ$".\
-             format(popt[0],perr[0],popt[1],perr[1],popt[2],perr[2]))
+ax1.plot(xdata,ydata,label="Best Fit Guassian\n $a={0}$ K\n$x_0={1}$ $^\circ$\n$\sigma={2}$ $^\circ$".\
+             format(sci_not(popt[0],perr[0]),sci_not(popt[1],perr[1]),sci_not(popt[2],perr[2])))
 plt.title(r"Fitting Telescope Beamwidth with a Guassian, $g(x) = a\exp\Big[{-\frac{(x-x_0)^2}{2\sigma^2}}\Big]$")
 plt.ylabel(r"Antenna Temperature [K]")
 plt.xlabel(r"RA [Degree]")
 plt.legend(loc='best')
+plt.autoscale(enable=True, axis='x', tight=True)
 plt.savefig('Continuum.pdf', bbox_inches='tight')#saves the output pdf
 plt.show() #shows plot
